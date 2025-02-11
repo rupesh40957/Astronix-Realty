@@ -1,0 +1,68 @@
+{
+    "projectType": "Featured Projects",
+    "propertyType": "Residential",
+    "image": [
+      "https://www.mamtarealty.com/img/",
+      "https://www.lo.com/img/"
+    ],
+    "video": [
+      "https://www.lo.com/video/",
+      "https://www.lo.com/video/"
+    ],
+    "propertyname": "3bhk in Dombivli",
+    "price": "Rs. 5,00,000",
+    "discountprice": "Rs. 4,50,000",
+    "location": "Dombivli",
+    "areasize": "3,000 sqft",
+    "bedroomnumber": "2",
+    "bathroomnumber": "2",
+    "aminities": [
+      {
+        "titles": "gym",
+        "description": "gym in the propery"
+      }
+    ],
+    "description": "3 bhk apartment for sale in Dombivli.",
+    "propertyHighlights": [
+      {
+        "titles": "gym",
+        "description": "gym in the propery"
+      },
+      {
+        "titles": "gym",
+        "description": "gym in the propery"
+      }
+    ],
+    "constructionStatus": [
+      {
+        "positiondate": "gym",
+        "description": "gym in the propery"
+      },
+      {
+        "titles": "gym",
+        "description": "gym in the propery"
+      }
+    ],
+    "buildingFeatures": [
+      {
+        "titles": "26 feb 2024",
+        "percentage": "50%",
+        "months": "3 months",
+        "floorsDone": "2"
+      }
+    ],
+    "legalDetails": [
+      {
+        "titles": "26 feb 2024",
+        "description": "gym in the propery ",
+        "verifiedDocuments": [
+          {
+            "titles": "how are you ",
+            "description": "son",
+            "googledrivelink": "https://www.lo.com/video/"
+          }
+        ]
+      }
+    ]
+  }
+  
