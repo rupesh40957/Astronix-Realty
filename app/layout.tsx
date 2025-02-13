@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import * as React from 'react'
 import { Header } from '@/components/Header'
 import Footer  from '@/components/Footer'
+import 'react-toastify/dist/ReactToastify.css';
 import 'tailwindcss/tailwind.css'
 import './globals.css'
 
@@ -15,6 +16,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
+      {/* The Navbar and Footer bar is Hide   */}
       <head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />

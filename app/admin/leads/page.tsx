@@ -1,3 +1,5 @@
+"use client";
+
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   Table,
@@ -15,23 +17,32 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { format } from "date-fns";
-import type { Lead } from "@shared/schema";
+import type { Lead } from "@/shared/schema";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 
 export default function Leads() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
+  
+  // React Query se leads data fetch kar rahe hain.
   const { data: leads = [], isLoading } = useQuery<Lead[]>({
     queryKey: ["/api/leads"],
+    queryFn: async () => {
+      const response = await fetch("/api/leads");
+      if (!response.ok) throw new Error("Error fetching leads");
+      return response.json();
+    },
   });
 
+  // Mutation for updating lead status.
   const updateStatus = useMutation({
     mutationFn: async ({ id, status }: { id: number; status: Lead["status"] }) => {
       const res = await apiRequest("PATCH", `/api/leads/${id}/status`, { status });
       return res.json();
     },
     onSuccess: () => {
+      // Invalidate query taaki latest data fetch ho jaye.
       queryClient.invalidateQueries({ queryKey: ["/api/leads"] });
       toast({
         title: "Lead status updated successfully",
@@ -39,6 +50,7 @@ export default function Leads() {
     },
   });
 
+  // Status ke liye dynamic CSS classes.
   const statusColors = {
     new: "bg-blue-100 text-blue-800",
     contacted: "bg-yellow-100 text-yellow-800",

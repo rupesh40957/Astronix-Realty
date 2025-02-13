@@ -1,6 +1,8 @@
+"use client";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import type { Property } from "@shared/schema";
+import type { Property } from "@/shared/schema";
 import { useLocation } from "wouter";
 import { Pencil, Trash2, Eye } from "lucide-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -18,11 +20,11 @@ export function PropertyCard({ property }: PropertyCardProps) {
 
   const deleteMutation = useMutation({
     mutationFn: async () => {
-      const res = await apiRequest("DELETE", `/api/properties/${property.id}`);
+      const res = await apiRequest("DELETE", `/api/properties/${property._id}`);
       if (!res.ok) throw new Error("Failed to delete property");
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/properties"] });
+      queryClient.invalidateQueries({ queryKey: ["properties"] });
       toast({
         title: "Property deleted successfully",
       });
@@ -51,7 +53,7 @@ export function PropertyCard({ property }: PropertyCardProps) {
             <Button 
               className="flex-1"
               variant="outline"
-              onClick={() => setLocation(`/properties/${property.id}`)}
+              onClick={() => setLocation(`/properties/${property._id}`)}
             >
               <Eye className="w-4 h-4 mr-2" />
               View
@@ -59,7 +61,7 @@ export function PropertyCard({ property }: PropertyCardProps) {
             <Button 
               className="flex-1"
               variant="outline"
-              onClick={() => setLocation(`/properties/${property.id}/edit`)}
+              onClick={() => setLocation(`/properties/${property._id}/edit`)}
             >
               <Pencil className="w-4 h-4 mr-2" />
               Edit

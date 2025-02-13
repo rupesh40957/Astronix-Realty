@@ -1,5 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
-import { useLocation } from "wouter";
+"use client";
+
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { Plus, Pencil, Trash2, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,9 +11,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import type { Blog } from "@shared/schema";
+import type { Blog } from "@/shared/schema";
 import { format } from "date-fns";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 
@@ -30,7 +31,7 @@ const categoryColors = {
 } as const;
 
 function BlogCard({ blog }: { blog: Blog }) {
-  const [_, setLocation] = useLocation();
+  const router = useRouter();
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -65,37 +66,41 @@ function BlogCard({ blog }: { blog: Blog }) {
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          <p className="text-muted-foreground line-clamp-2">{blog.description}</p>
+          <p className="text-muted-foreground line-clamp-2">
+            {blog.description}
+          </p>
           <div className="flex justify-between items-center text-sm text-muted-foreground">
             <span>By {blog.author}</span>
             <span>{format(new Date(blog.publishDate), "PPP")}</span>
           </div>
           <div className="flex gap-2 mt-4">
-            <Button 
+            <Button
               className="flex-1"
               variant="outline"
-              onClick={() => setLocation(`/blogs/${blog.id}`)}
+              onClick={() => router.push(`/blogs/${blog.id}`)}
             >
               <Eye className="w-4 h-4 mr-2" />
               View
             </Button>
-            <Button 
+            <Button
               className="flex-1"
               variant="outline"
-              onClick={() => setLocation(`/blogs/${blog.id}/edit`)}
+              onClick={() => router.push(`/blogs/${blog.id}/edit`)}
             >
               <Pencil className="w-4 h-4 mr-2" />
               Edit
             </Button>
-            <Button 
+            <Button
               className="flex-1"
               variant="outline"
               onClick={() => {
-                if (confirm("Are you sure you want to delete this blog post?")) {
+                if (
+                  confirm("Are you sure you want to delete this blog post?")
+                ) {
                   deleteMutation.mutate();
                 }
               }}
-              disabled={deleteMutation.isPending}
+              disabled={deleteMutation.isLoading}
             >
               <Trash2 className="w-4 h-4 mr-2" />
               Delete
@@ -108,16 +113,21 @@ function BlogCard({ blog }: { blog: Blog }) {
 }
 
 export default function Blogs() {
-  const [_, setLocation] = useLocation();
+  const router = useRouter();
   const { data: blogs = [], isLoading } = useQuery<Blog[]>({
     queryKey: ["/api/blogs"],
+    queryFn: async () => {
+      const res = await fetch("/api/blogs");
+      if (!res.ok) throw new Error("Failed to fetch blogs");
+      return res.json();
+    },
   });
 
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold">Blog Posts</h1>
-        <Button onClick={() => setLocation("/blogs/new")}>
+        <Button onClick={() => router.push("/admin/blogs/new")}>
           <Plus className="w-4 h-4 mr-2" />
           Add Blog Post
         </Button>
@@ -126,14 +136,19 @@ export default function Blogs() {
       {isLoading ? (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {[...Array(6)].map((_, i) => (
-            <div key={i} className="h-[200px] bg-muted animate-pulse rounded-lg" />
+            <div
+              key={i}
+              className="h-[200px] bg-muted animate-pulse rounded-lg"
+            />
           ))}
         </div>
       ) : blogs.length === 0 ? (
         <div className="text-center py-12">
           <h3 className="text-lg font-semibold mb-2">No blog posts found</h3>
-          <p className="text-muted-foreground mb-4">Add your first blog post to get started</p>
-          <Button onClick={() => setLocation("/blogs/new")}>Add Blog Post</Button>
+          <p className="text-muted-foreground mb-4">
+            Add your first blog post to get started
+          </p>
+          <Button onClick={() => router.push("/admin/blogs/new")}>Add Blog Post</Button>
         </div>
       ) : (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">

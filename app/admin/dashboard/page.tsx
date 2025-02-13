@@ -1,12 +1,19 @@
+"use client";
 import { useQuery } from "@tanstack/react-query";
 import { StatsCard } from "@/components/admin/dashboard/stats-card";
 import { Building, Users, Activity } from "lucide-react";
 
 export default function Dashboard() {
+  
   const { data: stats } = useQuery({
     queryKey: ["/api/stats"],
+    queryFn: async () => {
+      const response = await fetch("/api/stats");
+      if (!response.ok) throw new Error("Error fetching stats");
+      return response.json();
+    },
   });
-
+  
   return (
     <div className="p-6">
       <h1 className="text-3xl font-bold mb-8">Dashboard</h1>

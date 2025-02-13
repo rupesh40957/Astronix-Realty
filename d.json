@@ -1,11 +1,11 @@
 {
     "projectType": "Featured Projects",
     "propertyType": "Residential",
-    "image": [
+    "imagelink": [
       "https://www.mamtarealty.com/img/",
       "https://www.lo.com/img/"
     ],
-    "video": [
+    "videolink": [
       "https://www.lo.com/video/",
       "https://www.lo.com/video/"
     ],

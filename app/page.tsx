@@ -9,7 +9,6 @@ export default function Page() {
     <div className="min-h-screen flex flex-col">
       <main className="flex-grow pb-16 lg:pb-0">
         <Home />
-
       </main>
       <Footer />
       <MobileBottomNav />

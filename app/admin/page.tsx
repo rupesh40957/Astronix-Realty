@@ -1,28 +1,40 @@
-import { Switch, Route } from "wouter";
-import { queryClient } from "@/lib/queryClient";
-import { QueryClientProvider } from "@tanstack/react-query";
-import { Toaster } from "@/components/ui/toaster";
-import NotFound from "@/components/admin/not-found";
-import Dashboard from "@/components/admin/dashboard";
-import Properties from "@/components/admin/properties";
-import PropertyForm from "@/components/admin/property-form";
-import Leads from "@/components/admin/leads";
-import Blogs from "@/components/admin/blogs";
-import BlogForm from "@/components/admin/blog-form";
+"use client";
+import { useQuery } from "@tanstack/react-query";
+import { StatsCard } from "@/components/admin/dashboard/stats-card";
+import { Building, Users, Activity } from "lucide-react";
 
-
-function Router() {
+export default function Dashboard() {
+  
+  const { data: stats } = useQuery({
+    queryKey: ["/api/stats"],
+    queryFn: async () => {
+      const response = await fetch("/api/stats");
+      if (!response.ok) throw new Error("Error fetching stats");
+      return response.json();
+    },
+  });
+  
   return (
-    <>
-    <Dashboard />
-    <Properties />
-    <PropertyForm />
-    <PropertyForm mode="edit" />
-    <BlogForm />
-    <Blogs />
-    <Leads />
-    <NotFound />
-    </>
+    <div className="p-6">
+      <h1 className="text-3xl font-bold mb-8">Dashboard</h1>
+      
+      <div className="grid gap-4 md:grid-cols-3">
+        <StatsCard
+          title="Total Properties"
+          value={stats?.totalProperties ?? 0}
+          icon={Building}
+        />
+        <StatsCard
+          title="Active Leads"
+          value={stats?.activeLeads ?? 0}
+          icon={Users}
+        />
+        <StatsCard
+          title="Properties Viewed"
+          value={stats?.propertiesViewed ?? 0}
+          icon={Activity}
+        />
+      </div>
+    </div>
   );
 }
- 
