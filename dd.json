@@ -1,0 +1,40 @@
+{
+    "id": "1",
+    "title": "Real Estate Market Trends 2025",
+    "author": "John Doe",
+    "excerpt": "Discover the latest trends shaping the real estate market in 2025.",
+    "content": "The real estate market in 2025 is expected to experience significant shifts due to technological advancements and economic factors...",
+    "category": "Real Estate",
+    "tags": ["real estate", "market trends", "2025"],
+    "image": "https://example.com/images/real-estate-trends.jpg",
+    "status": "published",
+    "createdAt": "2025-02-10T10:00:00Z",
+    "updatedAt": "2025-02-12T14:30:00Z",
+    "tableOfContents": [
+      { "id": "1", "title": "Introduction", "link": "#introduction" },
+      { "id": "2", "title": "Current Market Overview", "link": "#current-market" },
+      { "id": "3", "title": "Future Predictions", "link": "#future-predictions" },
+      { "id": "4", "title": "Conclusion", "link": "#conclusion" }
+    ],
+    "relatedPosts": [
+      {
+        "id": "2",
+        "title": "How Technology is Changing Real Estate",
+        "link": "https://example.com/blog/technology-in-real-estate",
+        "image": "https://example.com/images/tech-real-estate.jpg"
+      },
+      {
+        "id": "3",
+        "title": "Top Real Estate Investment Tips for 2025",
+        "link": "https://example.com/blog/investment-tips-2025",
+        "image": "https://example.com/images/investment-tips.jpg"
+      }
+    ],
+    "socialMedia": {
+      "facebook": "https://facebook.com/example",
+      "twitter": "https://twitter.com/example",
+      "linkedin": "https://linkedin.com/company/example",
+      "instagram": "https://instagram.com/example"
+    }
+  }
+  
